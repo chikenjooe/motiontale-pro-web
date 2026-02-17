@@ -21,8 +21,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <NavBar />
             <main>{children}</main>
             <footer className="border-t border-black/5 py-10">
-              <div className="mx-auto max-w-6xl px-4 text-xs text-black/45">
-                © {new Date().getFullYear()} Motiontale Pro. Demo build.
+              <div className="mx-auto max-w-6xl px-4">
+                <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-black/45">
+                  <div>© {new Date().getFullYear()} Motiontale Pro. Demo build.</div>
+                  <div className="flex flex-wrap gap-4">
+                    <a className="hover:underline" href="/pricing">Pricing</a>
+                    <a className="hover:underline" href="/terms-of-service">Terms of Service</a>
+                    <a className="hover:underline" href="/terms-of-use">Terms of Use</a>
+                    <a className="hover:underline" href="/privacy-policy">Privacy Policy</a>
+                  </div>
+                </div>
               </div>
             </footer>
           </div>

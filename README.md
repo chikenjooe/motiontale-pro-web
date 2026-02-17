@@ -1,32 +1,54 @@
-# Motiontale Pro (demo)
+# Motiontale Pro
 
-Marketing + early-access flow scaffold for a motion-control product.
+Marketing site + early access app shell.
 
-## Stack
-
-- Next.js (App Router)
-- Tailwind CSS
-- next-auth (Credentials provider demo)
-
-## Getting started
+## Local dev
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Open: http://localhost:3000
+Open http://localhost:3000
 
-## Login (demo)
+## Supabase Auth setup
 
-Go to `/login`.
+This project uses Supabase Auth for:
 
-- Email: `boss@motiontale.pro`
-- Password: `motiontale`
+- Google OAuth
+- Email + password sign up / sign in
 
-After login you’ll be redirected to `/app` and see the whitelist message.
+### 1) Create a Supabase project
 
-## Notes
+In Supabase Dashboard:
 
-- Upload UI is client-side only (no backend).
-- Replace Credentials auth with Google OAuth when ready.
+- Authentication → Providers → enable **Google**
+- Authentication → URL Configuration:
+  - Site URL:
+    - local: `http://localhost:3000`
+    - production: `https://<your-domain>` (or GitHub Pages URL)
+  - Redirect URLs:
+    - `http://localhost:3000/auth/callback`
+    - `https://<your-domain>/auth/callback`
+
+### 2) Set env vars
+
+Create `.env.local`:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
+
+> Note: `anon` key is safe to expose client-side.
+
+## Pages
+
+- `/` marketing
+- `/pricing`
+- `/login`
+- `/auth/callback` (OAuth callback)
+- `/app` (protected UI shell)
+- `/terms-of-service`
+- `/terms-of-use`
+- `/privacy-policy`

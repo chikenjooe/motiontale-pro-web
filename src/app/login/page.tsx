@@ -1,11 +1,8 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useStaticAuth } from "@/lib/staticAuth";
-
-const useStatic = process.env.NEXT_PUBLIC_STATIC_AUTH === "true";
+import { useSupabaseAuth } from "@/lib/supabaseAuth";
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
@@ -40,112 +37,90 @@ function Input({
 }
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { signInWithPassword, signUpWithPassword, signInWithGoogle } = useSupabaseAuth();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<"login" | "signup">("login");
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-16">
-      {useStatic ? <StaticLogin /> : <NextAuthLogin />}
+      <Card>
+        <h1 className="text-2xl font-semibold tracking-tight">{mode === "login" ? "Login" : "Create account"}</h1>
+        <p className="mt-2 text-sm text-black/60">
+          Sign in with Google or use email + password.
+        </p>
+
+        <div className="mt-6 space-y-3">
+          <button
+            className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black/85 hover:bg-black/5"
+            onClick={async () => {
+              setLoading(true);
+              setError(null);
+              const res = await signInWithGoogle();
+              setLoading(false);
+              if (!res.ok) setError(res.error ?? "Google sign-in failed");
+              // Redirect happens via Supabase.
+            }}
+            disabled={loading}
+            type="button"
+          >
+            Continue with Google
+          </button>
+
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-black/10" />
+            <div className="text-xs text-black/40">or</div>
+            <div className="h-px flex-1 bg-black/10" />
+          </div>
+
+          <Input label="Email" type="email" value={email} onChange={setEmail} />
+          <Input label="Password" type="password" value={password} onChange={setPassword} />
+
+          {error ? <div className="text-sm text-red-600">{error}</div> : null}
+
+          <button
+            className={`w-full rounded-2xl px-4 py-3 text-sm font-medium transition ${
+              loading ? "bg-black/5 text-black/35" : "bg-[#ff3333] text-white hover:bg-[#ff1f1f]"
+            }`}
+            disabled={loading}
+            onClick={async () => {
+              setLoading(true);
+              setError(null);
+              const res =
+                mode === "login"
+                  ? await signInWithPassword(email, password)
+                  : await signUpWithPassword(email, password);
+              setLoading(false);
+              if (!res.ok) {
+                setError(res.error ?? "Auth failed");
+                return;
+              }
+              router.push("/app");
+            }}
+            type="button"
+          >
+            {mode === "login" ? "Sign in" : "Sign up"}
+          </button>
+
+          <button
+            type="button"
+            className="w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black/75 hover:bg-black/5"
+            onClick={() => setMode((m) => (m === "login" ? "signup" : "login"))}
+            disabled={loading}
+          >
+            {mode === "login" ? "Create an account" : "I already have an account"}
+          </button>
+
+          <div className="text-xs text-black/45">
+            By continuing, you agree to our <a className="underline" href="/terms-of-service">Terms</a> and
+            acknowledge our <a className="underline" href="/privacy-policy">Privacy Policy</a>.
+          </div>
+        </div>
+      </Card>
     </div>
-  );
-}
-
-function NextAuthLogin() {
-  const router = useRouter();
-  const callbackUrl = "/app";
-
-  const [email, setEmail] = useState("boss@motiontale.pro");
-  const [password, setPassword] = useState("motiontale");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  return (
-    <Card>
-      <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
-      <p className="mt-2 text-sm text-black/60">Demo credentials are prefilled.</p>
-
-      <div className="mt-6 space-y-3">
-        <Input label="Email" type="email" value={email} onChange={setEmail} />
-        <Input label="Password" type="password" value={password} onChange={setPassword} />
-
-        {error ? <div className="text-sm text-red-600">{error}</div> : null}
-
-        <button
-          className={`w-full rounded-2xl px-4 py-3 text-sm font-medium transition ${
-            loading ? "bg-black/5 text-black/35" : "bg-[#ff3333] text-white hover:bg-[#ff1f1f]"
-          }`}
-          disabled={loading}
-          onClick={async () => {
-            setLoading(true);
-            setError(null);
-            const res = await signIn("credentials", {
-              email,
-              password,
-              redirect: false,
-              callbackUrl,
-            });
-            setLoading(false);
-            if (!res || res.error) {
-              setError("Invalid credentials.");
-              return;
-            }
-            router.push(res.url ?? "/app");
-          }}
-        >
-          {loading ? "Signing in…" : "Sign in"}
-        </button>
-
-        <div className="text-xs text-black/45">
-          Credentials: <span className="font-medium">boss@motiontale.pro</span> /{" "}
-          <span className="font-medium">motiontale</span>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-function StaticLogin() {
-  const { login } = useStaticAuth();
-  const router = useRouter();
-
-  const [email, setEmail] = useState("boss@motiontale.pro");
-  const [password, setPassword] = useState("motiontale");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  return (
-    <Card>
-      <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
-      <p className="mt-2 text-sm text-black/60">GitHub Pages mode: client-side demo login.</p>
-
-      <div className="mt-6 space-y-3">
-        <Input label="Email" type="email" value={email} onChange={setEmail} />
-        <Input label="Password" type="password" value={password} onChange={setPassword} />
-
-        {error ? <div className="text-sm text-red-600">{error}</div> : null}
-
-        <button
-          className={`w-full rounded-2xl px-4 py-3 text-sm font-medium transition ${
-            loading ? "bg-black/5 text-black/35" : "bg-[#ff3333] text-white hover:bg-[#ff1f1f]"
-          }`}
-          disabled={loading}
-          onClick={async () => {
-            setLoading(true);
-            setError(null);
-            const ok = await login(email, password);
-            setLoading(false);
-            if (!ok) {
-              setError("Invalid credentials.");
-              return;
-            }
-            router.push("/app");
-          }}
-        >
-          {loading ? "Signing in…" : "Sign in"}
-        </button>
-
-        <div className="text-xs text-black/45">
-          Credentials: <span className="font-medium">boss@motiontale.pro</span> /{" "}
-          <span className="font-medium">motiontale</span>
-        </div>
-      </div>
-    </Card>
   );
 }
