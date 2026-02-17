@@ -15,11 +15,11 @@ function Dropzone({
   const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const border = dragOver ? "border-white/40" : "border-white/15";
+  const border = dragOver ? "border-black/20" : "border-black/10";
 
   return (
     <div
-      className={`group rounded-2xl border ${border} bg-white/5 p-4 transition`}
+      className={`group rounded-2xl border ${border} bg-white p-4 transition`}
       onDragOver={(e) => {
         e.preventDefault();
         setDragOver(true);
@@ -36,22 +36,19 @@ function Dropzone({
       }}
     >
       <div className="mb-2 flex items-center justify-between">
-        <div className="text-sm font-medium text-white/90">{label}</div>
+        <div className="text-sm font-medium text-black/85">{label}</div>
         <button
           type="button"
-          className="text-xs text-white/60 hover:text-white"
+          className="text-xs text-black/45 hover:text-black"
           onClick={() => inputRef.current?.click()}
         >
           Browse
         </button>
       </div>
-      <div className="text-xs text-white/60">
-        {fileName ? (
-          <span className="text-white/80">{fileName}</span>
-        ) : (
-          <span>Click or drag to upload ({accept})</span>
-        )}
+      <div className="text-xs text-black/50">
+        {fileName ? <span className="text-black/80">{fileName}</span> : <span>Click or drag to upload</span>}
       </div>
+      <div className="mt-1 text-[11px] text-black/35">Accepted: {accept}</div>
       <input
         ref={inputRef}
         type="file"
@@ -81,35 +78,17 @@ export function UploadPanel({
   const [prompt, setPrompt] = useState("");
 
   const hint = useMemo(() => {
-    if (!image && !video) return "Upload an image + a motion reference video";
+    if (!image && !video) return "Add your character + motion reference";
     if (image && !video) return "Now add a reference video";
     if (!image && video) return "Now add a character image";
     return "Ready";
   }, [image, video]);
 
-  const Button = (
-    <button
-      type="button"
-      disabled={ctaDisabled}
-      className={`inline-flex w-full items-center justify-center rounded-2xl px-4 py-3 text-sm font-medium transition ${
-        ctaDisabled
-          ? "cursor-not-allowed bg-white/10 text-white/40"
-          : "bg-white text-black hover:bg-white/90"
-      }`}
-      onClick={() => {
-        if (ctaDisabled) return;
-        if (ctaHref) window.location.href = ctaHref;
-      }}
-    >
-      {ctaLabel}
-    </button>
-  );
-
   return (
-    <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.08] to-white/[0.03] p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_30px_120px_rgba(0,0,0,0.55)]">
+    <div className="rounded-3xl border border-black/10 bg-white p-5 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
       <div className="mb-3 flex items-center justify-between">
-        <div className="text-sm font-medium text-white/80">Describe your generation</div>
-        <div className="text-xs text-white/50">{hint}</div>
+        <div className="text-sm font-semibold tracking-tight">Describe your generation</div>
+        <div className="text-xs text-black/45">{hint}</div>
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">
@@ -121,14 +100,30 @@ export function UploadPanel({
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Prompt (optional): e.g. cinematic, high-energy dance, smooth camera..."
-          className="min-h-24 w-full resize-none rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-white/35 outline-none focus:border-white/20"
+          placeholder="Prompt (optional): e.g. smooth, cinematic, high-energy, clean background"
+          className="min-h-24 w-full resize-none rounded-2xl border border-black/10 bg-[#f6f6f8] px-4 py-3 text-sm text-black placeholder:text-black/35 outline-none focus:border-black/20"
         />
       </div>
 
-      <div className="mt-3">{Button}</div>
+      <div className="mt-3">
+        <button
+          type="button"
+          disabled={ctaDisabled}
+          className={`inline-flex w-full items-center justify-center rounded-2xl px-4 py-3 text-sm font-medium transition ${
+            ctaDisabled
+              ? "cursor-not-allowed bg-black/5 text-black/35"
+              : "bg-[#ff3333] text-white hover:bg-[#ff1f1f]"
+          }`}
+          onClick={() => {
+            if (ctaDisabled) return;
+            if (ctaHref) window.location.href = ctaHref;
+          }}
+        >
+          {ctaLabel}
+        </button>
+      </div>
 
-      <div className="mt-3 text-xs text-white/45">
+      <div className="mt-3 text-xs text-black/45">
         Demo UI only. Generation backend is not connected yet.
       </div>
     </div>
