@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 function Dropzone({
@@ -165,21 +166,26 @@ export function UploadPanel({
       </div>
 
       <div className="mt-3">
-        <button
-          type="button"
-          disabled={ctaDisabled}
-          className={`inline-flex w-full items-center justify-center rounded-2xl px-4 py-3 text-sm font-medium transition ${
-            ctaDisabled
-              ? "cursor-not-allowed bg-black/5 text-black/35"
-              : "bg-[#ff3333] text-white hover:bg-[#ff1f1f]"
-          }`}
-          onClick={() => {
-            if (ctaDisabled) return;
-            if (ctaHref) router.push(ctaHref);
-          }}
-        >
-          {ctaLabel}
-        </button>
+        {ctaHref && !ctaDisabled ? (
+          <Link
+            href={ctaHref}
+            className="inline-flex w-full items-center justify-center rounded-2xl bg-[#ff3333] px-4 py-3 text-sm font-medium text-white hover:bg-[#ff1f1f]"
+          >
+            {ctaLabel}
+          </Link>
+        ) : (
+          <button
+            type="button"
+            disabled={ctaDisabled}
+            className="inline-flex w-full items-center justify-center rounded-2xl bg-black/5 px-4 py-3 text-sm font-medium text-black/35"
+            onClick={() => {
+              if (ctaDisabled) return;
+              if (ctaHref) router.push(ctaHref);
+            }}
+          >
+            {ctaLabel}
+          </button>
+        )}
       </div>
 
       <div className="mt-3 text-xs text-black/45">
