@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSupabaseAuth } from "@/lib/supabaseAuth";
+import { getBasePath } from "@/lib/basePath";
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
@@ -100,7 +101,7 @@ export default function LoginPage() {
                 setError(res.error ?? "Auth failed");
                 return;
               }
-              router.push("/app");
+              router.push(`${getBasePath()}/app`);
             }}
             type="button"
           >

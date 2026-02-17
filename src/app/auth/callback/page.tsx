@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { getBasePath } from "@/lib/basePath";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function AuthCallbackPage() {
             return;
           }
         }
-        router.replace("/app");
+        router.replace(`${getBasePath()}/app`);
       } catch {
         setMsg("Sign-in failed.");
       }
