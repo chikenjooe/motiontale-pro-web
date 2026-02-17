@@ -64,6 +64,35 @@ function Dropzone({
   );
 }
 
+function Select({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: Array<{ value: string; label: string }>;
+}) {
+  return (
+    <label className="block">
+      <div className="mb-1 text-[11px] font-semibold tracking-[0.12em] text-black/35">{label}</div>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full appearance-none rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-black/80 outline-none focus:border-black/20"
+      >
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 export function UploadPanel({
   ctaLabel,
   ctaHref,
@@ -76,6 +105,8 @@ export function UploadPanel({
   const [image, setImage] = useState<File | null>(null);
   const [video, setVideo] = useState<File | null>(null);
   const [prompt, setPrompt] = useState("");
+  const [model, setModel] = useState("kling-motion-control");
+  const [resolution, setResolution] = useState("720p");
 
   const hint = useMemo(() => {
     if (!image && !video) return "Add your character + motion reference";
@@ -96,13 +127,39 @@ export function UploadPanel({
         <Dropzone label="Video" accept=".mp4,.webm" onFile={setVideo} />
       </div>
 
+      <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <Select
+          label="MODEL"
+          value={model}
+          onChange={setModel}
+          options={[
+            { value: "kling-motion-control", label: "Kling Motion Control" },
+            { value: "motiontale-pro", label: "Motiontale Pro (beta)" },
+          ]}
+        />
+        <Select
+          label="RESOLUTION"
+          value={resolution}
+          onChange={setResolution}
+          options={[
+            { value: "720p", label: "720p" },
+            { value: "1080p", label: "1080p" },
+          ]}
+        />
+      </div>
+
       <div className="mt-3">
+        <div className="mb-1 text-[11px] font-semibold tracking-[0.12em] text-black/35">PROMPT</div>
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Prompt (optional): e.g. smooth, cinematic, high-energy, clean background"
+          placeholder="Optional: smooth camera, cinematic lighting, clean background, high fidelity"
           className="min-h-24 w-full resize-none rounded-2xl border border-black/10 bg-[#f6f6f8] px-4 py-3 text-sm text-black placeholder:text-black/35 outline-none focus:border-black/20"
         />
+        <div className="mt-2 text-[11px] text-black/40">
+          Selected: <span className="font-medium text-black/70">{model}</span> ·{" "}
+          <span className="font-medium text-black/70">{resolution}</span>
+        </div>
       </div>
 
       <div className="mt-3">
