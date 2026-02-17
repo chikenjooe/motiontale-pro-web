@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSupabaseAuth } from "@/lib/supabaseAuth";
@@ -116,8 +117,14 @@ export default function LoginPage() {
           </button>
 
           <div className="text-xs text-black/45">
-            By continuing, you agree to our <a className="underline" href="/terms-of-service">Terms</a> and
-            acknowledge our <a className="underline" href="/privacy-policy">Privacy Policy</a>.
+            By continuing, you agree to our{" "}
+            <Link className="underline" href="/terms-of-service">
+              Terms
+            </Link>{" "}
+            and acknowledge our{" "}
+            <Link className="underline" href="/privacy-policy">
+              Privacy Policy
+            </Link>.
           </div>
         </div>
       </Card>

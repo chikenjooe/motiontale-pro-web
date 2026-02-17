@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -25,10 +26,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-black/45">
                   <div>© {new Date().getFullYear()} Motiontale Pro. Demo build.</div>
                   <div className="flex flex-wrap gap-4">
-                    <a className="hover:underline" href="/pricing">Pricing</a>
-                    <a className="hover:underline" href="/terms-of-service">Terms of Service</a>
-                    <a className="hover:underline" href="/terms-of-use">Terms of Use</a>
-                    <a className="hover:underline" href="/privacy-policy">Privacy Policy</a>
+                    <Link className="hover:underline" href="/pricing">
+                      Pricing
+                    </Link>
+                    <Link className="hover:underline" href="/terms-of-service">
+                      Terms of Service
+                    </Link>
+                    <Link className="hover:underline" href="/terms-of-use">
+                      Terms of Use
+                    </Link>
+                    <Link className="hover:underline" href="/privacy-policy">
+                      Privacy Policy
+                    </Link>
                   </div>
                 </div>
               </div>

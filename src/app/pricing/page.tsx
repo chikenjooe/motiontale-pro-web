@@ -95,8 +95,13 @@ export default function PricingPage() {
       </div>
 
       <div className="mt-10 text-xs text-black/45">
-        Legal: see <a className="underline" href="/terms-of-service">Terms of Service</a> and{" "}
-        <a className="underline" href="/privacy-policy">Privacy Policy</a>.
+        Legal: see <Link className="underline" href="/terms-of-service">
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link className="underline" href="/privacy-policy">
+          Privacy Policy
+        </Link>.
       </div>
     </div>
   );
