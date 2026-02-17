@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabaseClient";
+import { getBasePath } from "@/lib/basePath";
 
 type Ctx = {
   session: Session | null;
@@ -75,7 +76,7 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
       },
       async signInWithGoogle() {
         if (!supabase) return { ok: false, error: "Supabase is not configured" };
-        const redirectTo = `${window.location.origin}/auth/callback`;
+        const redirectTo = `${window.location.origin}${getBasePath()}/auth/callback`;
         const { error } = await supabase.auth.signInWithOAuth({
           provider: "google",
           options: { redirectTo },
