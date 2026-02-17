@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function Dropzone({
   label,
@@ -107,6 +108,7 @@ export function UploadPanel({
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("kling-motion-control");
   const [resolution, setResolution] = useState("720p");
+  const router = useRouter();
 
   const hint = useMemo(() => {
     if (!image && !video) return "Add your character + motion reference";
@@ -173,7 +175,7 @@ export function UploadPanel({
           }`}
           onClick={() => {
             if (ctaDisabled) return;
-            if (ctaHref) window.location.href = ctaHref;
+            if (ctaHref) router.push(ctaHref);
           }}
         >
           {ctaLabel}
