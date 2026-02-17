@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { UploadPanel } from "@/components/UploadPanel";
+import { ExampleVideo } from "@/components/ExampleVideo";
 
 const EXAMPLE_VIDEOS = [
   {
@@ -197,7 +198,8 @@ export default function Home() {
               className="rounded-3xl border border-black/10 bg-white p-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)]"
             >
               <div className="aspect-video w-full overflow-hidden rounded-2xl border border-black/10 bg-black/5">
-                <video className="h-full w-full object-cover" src={e.src} muted loop playsInline controls />
+                {/* preview */}
+                <ExampleVideo src={e.src} />
               </div>
               <div className="mt-3 text-sm font-semibold">{e.title}</div>
               <div className="mt-1 text-xs text-black/55">{e.desc}</div>
