@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSupabaseAuth } from "@/lib/supabaseAuth";
 
 function Button({
@@ -42,8 +43,8 @@ export function NavBar() {
     <header className="sticky top-0 z-50 border-b border-black/5 bg-[#f6f6f8]/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#ff3333] text-xs font-bold text-white">
-            M
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg overflow-hidden bg-white border border-black/10">
+            <Image src="/brand/logo.png" alt="Motiontale Pro" width={28} height={28} priority />
           </span>
           Motiontale <span className="text-black/50">Pro</span>
         </Link>
