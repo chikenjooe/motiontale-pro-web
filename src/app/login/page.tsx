@@ -38,6 +38,37 @@ function Input({
   );
 }
 
+function GoogleGIcon({ className }: { className?: string }) {
+  // Official Google "G" colors (approx) as inline SVG.
+  return (
+    <svg
+      viewBox="0 0 48 48"
+      aria-hidden="true"
+      className={className}
+      width="18"
+      height="18"
+    >
+      <path
+        fill="#EA4335"
+        d="M24 9.5c3.54 0 6.01 1.53 7.39 2.81l5.43-5.43C33.46 3.85 29.08 1.5 24 1.5 14.72 1.5 6.88 6.82 3.05 14.56l6.33 4.91C11.11 13.89 17.09 9.5 24 9.5z"
+      />
+      <path
+        fill="#4285F4"
+        d="M46.5 24c0-1.57-.14-3.07-.41-4.5H24v9h12.65c-.55 2.96-2.2 5.47-4.67 7.15l7.18 5.57C43.33 37.36 46.5 31.17 46.5 24z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M9.38 28.53A14.5 14.5 0 0 1 8.5 24c0-1.57.28-3.09.78-4.53l-6.33-4.91A22.47 22.47 0 0 0 1.5 24c0 3.63.87 7.07 2.45 10.09l5.43-5.56z"
+      />
+      <path
+        fill="#34A853"
+        d="M24 46.5c6.08 0 11.18-2.01 14.9-5.47l-7.18-5.57c-2 1.34-4.56 2.13-7.72 2.13-6.9 0-12.76-4.66-14.85-10.96l-5.43 5.56C7.5 40.94 15.44 46.5 24 46.5z"
+      />
+      <path fill="none" d="M1.5 1.5h45v45h-45z" />
+    </svg>
+  );
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const { signInWithPassword, signUpWithPassword, signInWithGoogle } = useSupabaseAuth();
@@ -70,7 +101,10 @@ export default function LoginPage() {
             disabled={loading}
             type="button"
           >
-            Continue with Google
+            <span className="inline-flex items-center justify-center gap-2">
+              <GoogleGIcon />
+              <span>Continue with Google</span>
+            </span>
           </button>
 
           <div className="flex items-center gap-3">
