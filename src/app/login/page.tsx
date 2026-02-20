@@ -135,7 +135,13 @@ export default function LoginPage() {
                 setError(res.error ?? "Auth failed");
                 return;
               }
-              router.push(`${getBasePath()}/app`);
+              // If signup requires email confirmation, Supabase returns ok but no session.
+              // In that case keep the user on the page with a helpful message.
+              if (mode === "signup" && (res as any).needsEmailConfirmation) {
+                setError("Check your email to confirm your account, then come back and log in.");
+                return;
+              }
+              router.push(`${getBasePath()}/`);
             }}
             type="button"
           >

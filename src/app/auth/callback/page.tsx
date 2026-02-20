@@ -25,7 +25,7 @@ export default function AuthCallbackPage() {
             return;
           }
         }
-        router.replace(`${getBasePath()}/app`);
+        router.replace(`${getBasePath()}/`);
       } catch {
         setMsg("Sign-in failed.");
       }

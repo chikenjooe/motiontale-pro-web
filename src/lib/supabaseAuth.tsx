@@ -10,7 +10,7 @@ type Ctx = {
   user: User | null;
   status: "loading" | "authenticated" | "unauthenticated";
   signInWithPassword: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
-  signUpWithPassword: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
+  signUpWithPassword: (email: string, password: string) => Promise<{ ok: boolean; error?: string; needsEmailConfirmation?: boolean }>;
   signInWithGoogle: () => Promise<{ ok: boolean; error?: string }>;
   signOut: () => Promise<void>;
   isConfigured: boolean;
@@ -71,8 +71,16 @@ export function SupabaseAuthProvider({ children }: { children: React.ReactNode }
       },
       async signUpWithPassword(email, password) {
         if (!supabase) return { ok: false, error: "Supabase is not configured" };
-        const { error } = await supabase.auth.signUp({ email, password });
-        return error ? { ok: false, error: error.message } : { ok: true };
+        const redirectTo = `${window.location.origin}${getBasePath()}/auth/callback`;
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: redirectTo },
+        });
+        if (error) return { ok: false, error: error.message };
+        // If email confirmation is enabled, session will be null.
+        if (!data.session) return { ok: true, needsEmailConfirmation: true };
+        return { ok: true };
       },
       async signInWithGoogle() {
         if (!supabase) return { ok: false, error: "Supabase is not configured" };
