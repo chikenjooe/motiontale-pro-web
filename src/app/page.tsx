@@ -146,12 +146,6 @@ export default function Home() {
               >
                 Watch examples
               </Link>
-              <Link
-                href="#features"
-                className="rounded-full border border-black/10 bg-white px-5 py-2.5 text-sm font-medium text-black/80 hover:bg-black/5"
-              >
-                Features
-              </Link>
             </div>
 
             <div className="mt-8 grid grid-cols-2 gap-3 text-xs text-black/55 md:max-w-md">
@@ -208,27 +202,8 @@ export default function Home() {
         <div className="mt-4" />
       </section>
 
-      <section id="features" className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-        <SectionTitle kicker="FEATURES" title="Clean UI, pro workflow" />
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {[{
-            t: "High signal UI",
-            d: "No neon scam vibes. Clear controls and spacing.",
-          }, {
-            t: "Motion fidelity",
-            d: "Transfer rhythm + gesture while preserving identity.",
-          }, {
-            t: "Creator workflow",
-            d: "Upload → prompt → generate → iterate.",
-          }].map((c) => (
-            <div key={c.t} className="rounded-3xl border border-black/10 bg-white p-5 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
-              <div className="text-sm font-semibold">{c.t}</div>
-              <div className="mt-2 text-sm text-black/60">{c.d}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       <section className="mx-auto max-w-6xl px-4 py-12 md:py-16">
         <SectionTitle kicker="HOW IT WORKS" title="Three steps" />
