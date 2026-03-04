@@ -78,17 +78,11 @@ function UserHoverMenu() {
           <div className="mt-2 text-sm text-black/60">No generations yet.</div>
         </div>
 
-        <div className="mt-4 flex items-center gap-2">
-          <Link
-            href="/app"
-            className="inline-flex flex-1 items-center justify-center rounded-2xl border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-black/80 hover:bg-black/5"
-          >
-            Dashboard
-          </Link>
+        <div className="mt-4">
           <button
             type="button"
             onClick={() => signOut()}
-            className="inline-flex flex-1 items-center justify-center rounded-2xl bg-black px-4 py-2.5 text-sm font-medium text-white hover:bg-black/90"
+            className="inline-flex w-full items-center justify-center rounded-2xl bg-black px-4 py-2.5 text-sm font-medium text-white hover:bg-black/90"
           >
             Logout
           </button>
@@ -110,12 +104,6 @@ export function NavBar() {
           </span>
           Motiontale <span className="text-black/50">Pro</span>
         </Link>
-
-        <nav className="hidden items-center gap-2 md:flex">
-          <Button href="#examples" variant="ghost">
-            Examples
-          </Button>
-        </nav>
 
         <div className="flex items-center gap-2">
           {status === "authenticated" && user ? (

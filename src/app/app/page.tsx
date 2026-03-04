@@ -31,9 +31,9 @@ export default function AppPage() {
       <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr]">
         <div>
           <Badge />
-          <h1 className="mt-5 text-4xl font-semibold tracking-tight">Thanks for signing up</h1>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight">Спасибо за регистрацию</h1>
           <p className="mt-3 max-w-xl text-sm text-black/60">
-            You’re on the waitlist. We’ll email you when Motiontale Pro is ready.
+            Вы попали в список ожидания — мы обязательно вам напишем, когда продукт запустится.
           </p>
 
           <div className="mt-6 rounded-3xl border border-black/10 bg-white p-5 text-sm text-black/65 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
