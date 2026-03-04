@@ -98,25 +98,7 @@ function Metric({ value, label }: { value: string; label: string }) {
   );
 }
 
-function LogoCloud() {
-  const items = ["Studios", "Creators", "Agencies", "Games", "Ads", "AI Teams"];
-  return (
-    <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
-      <div className="text-[11px] font-semibold tracking-[0.18em] text-black/35">TRUST</div>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {items.map((t) => (
-          <div
-            key={t}
-            className="rounded-full border border-black/10 bg-[#f6f6f8] px-3 py-1 text-xs font-medium text-black/60"
-          >
-            {t}
-          </div>
-        ))}
-      </div>
-      <div className="mt-3 text-xs text-black/45" />
-    </div>
-  );
-}
+
 
 export default function Home() {
   return (
@@ -173,10 +155,6 @@ export default function Home() {
           <Metric value="720p" label="Default output" />
           <Metric value="1-click" label="Request access → onboard" />
           <Metric value="Waitlist" label="Early access" />
-        </div>
-
-        <div className="mt-4">
-          <LogoCloud />
         </div>
       </section>
 
