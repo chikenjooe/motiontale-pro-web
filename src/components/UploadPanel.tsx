@@ -151,16 +151,30 @@ export function UploadPanel({
       </div>
 
       <div className="mt-3 grid gap-3 md:grid-cols-2">
-        <Select
-          label="MODEL"
-          value={model}
-          onChange={setModel}
-          disabled={disabled}
-          options={[
-            { value: "kling-motion-control", label: "Kling Motion Control" },
-            { value: "motiontale-pro", label: "Motiontale Pro (beta)" },
-          ]}
-        />
+        {disabled ? (
+          <label className="block">
+            <div className="mb-1 text-[11px] font-semibold tracking-[0.12em] text-black/35">MODEL</div>
+            <div className="flex w-full items-center gap-2 rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-black/60">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/kling-color.png"
+                alt="Kling"
+                className="h-5 w-5 rounded-md"
+              />
+              <span className="font-medium text-black/70">Kling</span>
+            </div>
+          </label>
+        ) : (
+          <Select
+            label="MODEL"
+            value={model}
+            onChange={setModel}
+            options={[
+              { value: "kling-motion-control", label: "Kling Motion Control" },
+              { value: "motiontale-pro", label: "Motiontale Pro (beta)" },
+            ]}
+          />
+        )}
         <Select
           label="RESOLUTION"
           value={resolution}
