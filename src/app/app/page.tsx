@@ -7,9 +7,9 @@ import { useSupabaseAuth } from "@/lib/supabaseAuth";
 
 function Badge() {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-600/20 bg-emerald-600/10 px-3 py-1 text-xs font-medium text-emerald-700">
-      <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
-      You’re whitelisted
+    <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1 text-xs font-medium text-black/70">
+      <span className="h-1.5 w-1.5 rounded-full bg-[#ff3333]" />
+      Waitlist
     </div>
   );
 }
@@ -31,9 +31,9 @@ export default function AppPage() {
       <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr]">
         <div>
           <Badge />
-          <h1 className="mt-5 text-4xl font-semibold tracking-tight">We added you to the whitelist</h1>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight">Thanks for signing up</h1>
           <p className="mt-3 max-w-xl text-sm text-black/60">
-            This is the early access app shell. Next step: wire the generation backend.
+            You’re on the waitlist. We’ll email you when Motiontale Pro is ready.
           </p>
 
           <div className="mt-6 rounded-3xl border border-black/10 bg-white p-5 text-sm text-black/65 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
@@ -42,7 +42,7 @@ export default function AppPage() {
         </div>
 
         <div>
-          <UploadPanel ctaLabel="Generate (coming soon)" ctaDisabled />
+          <UploadPanel ctaLabel="Request access" ctaHref="/login" disabled ctaDisabled />
         </div>
       </div>
     </div>

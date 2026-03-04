@@ -63,15 +63,15 @@ const EXAMPLE_VIDEOS = [
 const FAQ = [
   {
     q: "What is Motiontale Pro?",
-    a: "A clean motion-control workflow: upload an image + a reference video, add optional prompt, generate. This is currently a demo UI.",
+    a: "Upload an image + a reference video, add optional prompt, and generate.",
   },
   {
     q: "What’s supported?",
-    a: "Images: JPG/PNG. Videos: MP4/WebM. Backend is not connected yet.",
+    a: "Images: JPG/PNG. Videos: MP4/WebM.",
   },
   {
     q: "Why login?",
-    a: "Early access is whitelisted. After login you’ll see the whitelist confirmation screen.",
+    a: "Early access is limited. After login you’ll be added to the waitlist.",
   },
   {
     q: "Can I use it for commercial work?",
@@ -113,9 +113,7 @@ function LogoCloud() {
           </div>
         ))}
       </div>
-      <div className="mt-3 text-xs text-black/45">
-        Placeholders for now — when you have real logos/testimonials we’ll plug them in.
-      </div>
+      <div className="mt-3 text-xs text-black/45" />
     </div>
   );
 }
@@ -169,7 +167,7 @@ export default function Home() {
           </div>
 
           <div>
-            <UploadPanel ctaLabel="Login to Generate" ctaHref="/login" />
+            <UploadPanel ctaLabel="Request access" ctaHref="/login" disabled />
             <div className="mt-3 text-xs text-black/45">
               Tip: match starting pose of your image to the first frame of the reference video.
             </div>
@@ -178,9 +176,9 @@ export default function Home() {
 
         <div className="mt-8 grid gap-4 md:grid-cols-4">
           <Metric value="< 10s" label="Best reference clip length" />
-          <Metric value="720p" label="Default output (demo)" />
-          <Metric value="1-click" label="Upload → prompt → generate" />
-          <Metric value="Whitelist" label="Early access gate" />
+          <Metric value="720p" label="Default output" />
+          <Metric value="1-click" label="Request access → onboard" />
+          <Metric value="Waitlist" label="Early access" />
         </div>
 
         <div className="mt-4">
@@ -189,7 +187,7 @@ export default function Home() {
       </section>
 
       <section id="examples" className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-        <SectionTitle kicker="EXAMPLES" title="Preview motion" desc="Video previews pulled from your references." />
+        <SectionTitle kicker="EXAMPLES" title="Examples" />
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {EXAMPLE_VIDEOS.map((e) => (
@@ -207,10 +205,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-4 text-xs text-black/45">
-          Note: videos are referenced via external URLs. If you want, we can replace them with your own generated
-          previews.
-        </div>
+        <div className="mt-4" />
       </section>
 
       <section id="features" className="mx-auto max-w-6xl px-4 py-12 md:py-16">
@@ -273,7 +268,7 @@ export default function Home() {
         <div className="rounded-3xl border border-black/10 bg-white p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)]">
           <div className="text-2xl font-semibold tracking-tight">Try Motiontale Pro</div>
           <div className="mt-2 max-w-2xl text-sm text-black/60">
-            Login to access early access flow. After login you’ll see the whitelist confirmation.
+            Request access to join the waitlist. We’ll email you when Motiontale Pro is ready.
           </div>
           <div className="mt-5">
             <Link

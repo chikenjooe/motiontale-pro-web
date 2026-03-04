@@ -8,10 +8,12 @@ function Dropzone({
   label,
   accept,
   onFile,
+  disabled,
 }: {
   label: string;
   accept: string;
   onFile: (file: File | null) => void;
+  disabled?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -21,13 +23,18 @@ function Dropzone({
 
   return (
     <div
-      className={`group rounded-2xl border ${border} bg-white p-4 transition`}
+      className={`group rounded-2xl border ${border} bg-white p-4 transition ${disabled ? "opacity-60" : ""}`}
       onDragOver={(e) => {
+        if (disabled) return;
         e.preventDefault();
         setDragOver(true);
       }}
-      onDragLeave={() => setDragOver(false)}
+      onDragLeave={() => {
+        if (disabled) return;
+        setDragOver(false);
+      }}
       onDrop={(e) => {
+        if (disabled) return;
         e.preventDefault();
         setDragOver(false);
         const f = e.dataTransfer.files?.[0] ?? null;
@@ -41,8 +48,12 @@ function Dropzone({
         <div className="text-sm font-medium text-black/85">{label}</div>
         <button
           type="button"
-          className="text-xs text-black/45 hover:text-black"
-          onClick={() => inputRef.current?.click()}
+          className={`text-xs ${disabled ? "text-black/25" : "text-black/45 hover:text-black"}`}
+          onClick={() => {
+            if (disabled) return;
+            inputRef.current?.click();
+          }}
+          disabled={disabled}
         >
           Browse
         </button>
@@ -56,7 +67,9 @@ function Dropzone({
         type="file"
         accept={accept}
         className="hidden"
+        disabled={disabled}
         onChange={(e) => {
+          if (disabled) return;
           const f = e.target.files?.[0] ?? null;
           setFileName(f?.name ?? null);
           onFile(f);
@@ -71,11 +84,13 @@ function Select({
   value,
   onChange,
   options,
+  disabled,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   options: Array<{ value: string; label: string }>;
+  disabled?: boolean;
 }) {
   return (
     <label className="block">
@@ -83,7 +98,10 @@ function Select({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-black/80 outline-none focus:border-black/20"
+        disabled={disabled}
+        className={`w-full appearance-none rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm outline-none focus:border-black/20 ${
+          disabled ? "text-black/35" : "text-black/80"
+        }`}
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -99,10 +117,12 @@ export function UploadPanel({
   ctaLabel,
   ctaHref,
   ctaDisabled,
+  disabled,
 }: {
   ctaLabel: string;
   ctaHref?: string;
   ctaDisabled?: boolean;
+  disabled?: boolean;
 }) {
   const [image, setImage] = useState<File | null>(null);
   const [video, setVideo] = useState<File | null>(null);
@@ -126,8 +146,8 @@ export function UploadPanel({
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">
-        <Dropzone label="Image" accept=".jpg,.jpeg,.png" onFile={setImage} />
-        <Dropzone label="Video" accept=".mp4,.webm" onFile={setVideo} />
+        <Dropzone label="Image" accept=".jpg,.jpeg,.png" onFile={setImage} disabled={disabled} />
+        <Dropzone label="Video" accept=".mp4,.webm" onFile={setVideo} disabled={disabled} />
       </div>
 
       <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -135,6 +155,7 @@ export function UploadPanel({
           label="MODEL"
           value={model}
           onChange={setModel}
+          disabled={disabled}
           options={[
             { value: "kling-motion-control", label: "Kling Motion Control" },
             { value: "motiontale-pro", label: "Motiontale Pro (beta)" },
@@ -144,6 +165,7 @@ export function UploadPanel({
           label="RESOLUTION"
           value={resolution}
           onChange={setResolution}
+          disabled={disabled}
           options={[
             { value: "720p", label: "720p" },
             { value: "1080p", label: "1080p" },
@@ -156,8 +178,11 @@ export function UploadPanel({
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
+          disabled={disabled}
           placeholder="Optional: smooth camera, cinematic lighting, clean background, high fidelity"
-          className="min-h-24 w-full resize-none rounded-2xl border border-black/10 bg-[#f6f6f8] px-4 py-3 text-sm text-black placeholder:text-black/35 outline-none focus:border-black/20"
+          className={`min-h-24 w-full resize-none rounded-2xl border border-black/10 bg-[#f6f6f8] px-4 py-3 text-sm placeholder:text-black/35 outline-none focus:border-black/20 ${
+            disabled ? "text-black/35" : "text-black"
+          }`}
         />
         <div className="mt-2 text-[11px] text-black/40">
           Selected: <span className="font-medium text-black/70">{model}</span> ·{" "}
@@ -186,10 +211,6 @@ export function UploadPanel({
             {ctaLabel}
           </button>
         )}
-      </div>
-
-      <div className="mt-3 text-xs text-black/45">
-        Demo UI only. Generation backend is not connected yet.
       </div>
     </div>
   );

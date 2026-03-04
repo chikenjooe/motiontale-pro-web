@@ -112,9 +112,6 @@ export function NavBar() {
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex">
-          <Button href="/pricing" variant="ghost">
-            Pricing
-          </Button>
           <Button href="#examples" variant="ghost">
             Examples
           </Button>
@@ -128,7 +125,7 @@ export function NavBar() {
               <Button href="/login" variant="ghost">
                 Login
               </Button>
-              <Button href="/login">Get access</Button>
+              <Button href="/login">Request access</Button>
             </>
           )}
         </div>

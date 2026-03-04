@@ -140,7 +140,7 @@ export default function LoginPage() {
                 return;
               }
 
-              router.push(`${getBasePath()}/`);
+              router.push(`${getBasePath()}/app`);
             }}
             type="button"
           >

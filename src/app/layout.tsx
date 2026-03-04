@@ -53,17 +53,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <footer className="border-t border-black/5 py-10">
               <div className="mx-auto max-w-6xl px-4">
                 <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-black/45">
-                  <div>© {new Date().getFullYear()} Motiontale Pro. Demo build.</div>
+                  <div>© {new Date().getFullYear()} Motiontale Pro.</div>
                   <div className="flex flex-wrap gap-4">
-                    <Link className="hover:underline" href="/pricing">
-                      Pricing
-                    </Link>
-                    <Link className="hover:underline" href="/terms-of-service">
-                      Terms of Service
-                    </Link>
-                    <Link className="hover:underline" href="/terms-of-use">
-                      Terms of Use
-                    </Link>
                     <Link className="hover:underline" href="/privacy-policy">
                       Privacy Policy
                     </Link>
